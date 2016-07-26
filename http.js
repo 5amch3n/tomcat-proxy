@@ -92,6 +92,14 @@ var server = http.createServer(function(req, res){
   }
 });
 
+server.on('upgrade', function(req, socket, head){
+  var target = findTarget('ws');
+  if(target) {
+    proxy.ws(req, socket, head, target);  
+  } else {
+    console.log('No ws proxy found');  
+  }
+});
 server.listen(8888);
 
 console.log('server running at 8888...');
