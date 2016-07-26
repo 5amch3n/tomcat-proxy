@@ -54,6 +54,7 @@ function findTarget(protocol){
 }
 var proxy = httpProxy.createServer();
 var server = http.createServer(function(req, res){
+  req.headers['x-forwarded-for'] = req.connection.remoteAddress;
   if(/\/balancer\/.*/.test(req.url)) {
     var credentials = auth(req);
 
